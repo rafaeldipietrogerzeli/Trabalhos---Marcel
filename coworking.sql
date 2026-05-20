@@ -1,0 +1,129 @@
+CREATE DATABASE coworking;
+USE coworking;
+
+-- TABELA CLIENTE
+
+CREATE TABLE cliente (
+    id_cliente INT PRIMARY KEY AUTO_INCREMENT,
+    nome_completo VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    telefone VARCHAR(20),
+    data_cadastro DATE
+);
+
+-- TABELA PLANO
+
+CREATE TABLE plano (
+    id_plano INT PRIMARY KEY AUTO_INCREMENT,
+    nome_plano VARCHAR(50) NOT NULL,
+    valor_mensal DECIMAL(10,2) NOT NULL,
+    limite_horas INT,
+    categoria VARCHAR(50)
+);
+
+-- TABELA ASSINATURA
+
+CREATE TABLE assinatura (
+    id_assinatura INT PRIMARY KEY AUTO_INCREMENT,
+    data_inicio DATE NOT NULL,
+    id_cliente INT,
+    id_plano INT,
+
+    CONSTRAINT fk_ass_cliente
+        FOREIGN KEY (id_cliente)
+        REFERENCES cliente(id_cliente),
+
+    CONSTRAINT fk_ass_plano
+        FOREIGN KEY (id_plano)
+        REFERENCES plano(id_plano)
+);
+
+-- TABELA SALA
+
+CREATE TABLE sala (
+    id_sala INT PRIMARY KEY AUTO_INCREMENT,
+    nome_sala VARCHAR(50),
+    capacidade_maxima INT,
+    localizacao VARCHAR(100),
+    tipo_sala VARCHAR(50)
+);
+
+-- TABELA RESERVA
+
+CREATE TABLE reserva (
+    id_reserva INT PRIMARY KEY AUTO_INCREMENT,
+    data_reserva DATE,
+    horario_inicio TIME,
+    horario_fim TIME,
+    status_reserva VARCHAR(30),
+    valor_total DECIMAL(10,2),
+    id_cliente INT,
+    id_sala INT,
+
+    CONSTRAINT fk_res_cliente
+        FOREIGN KEY (id_cliente)
+        REFERENCES cliente(id_cliente),
+
+    CONSTRAINT fk_res_sala
+        FOREIGN KEY (id_sala)
+        REFERENCES sala(id_sala)
+);
+
+-- TABELA SERVICO_ADICIONAL
+
+CREATE TABLE servico_adicional (
+    id_servico INT PRIMARY KEY AUTO_INCREMENT,
+    nome_servico VARCHAR(50),
+    descricao VARCHAR(200),
+    valor_unitario DECIMAL(10,2),
+    disponibilidade BOOLEAN
+);
+
+-- TABELA RESERVA_SERVICO
+
+CREATE TABLE reserva_servico (
+    id_reserva INT,
+    id_servico INT,
+    quantidade INT,
+    valor_cobrado DECIMAL(10,2),
+
+    PRIMARY KEY (id_reserva, id_servico),
+
+    CONSTRAINT fk_rs_reserva
+        FOREIGN KEY (id_reserva)
+        REFERENCES reserva(id_reserva),
+
+    CONSTRAINT fk_rs_servico
+        FOREIGN KEY (id_servico)
+        REFERENCES servico_adicional(id_servico)
+);
+
+-- EXCLUSÃO DE TABELA
+
+DROP TABLE reserva_servico;
+
+-- RECRIANDO TABELA
+
+CREATE TABLE reserva_servico (
+    id_reserva INT,
+    id_servico INT,
+    quantidade INT,
+    valor_cobrado DECIMAL(10,2),
+
+    PRIMARY KEY (id_reserva, id_servico),
+
+    FOREIGN KEY (id_reserva)
+        REFERENCES reserva(id_reserva),
+
+    FOREIGN KEY (id_servico)
+        REFERENCES servico_adicional(id_servico)
+);
+
+-- ALTERAÇÕES EM TABELAS
+
+ALTER TABLE cliente
+ADD COLUMN endereco VARCHAR(150);
+
+ALTER TABLE sala
+MODIFY tipo_sala VARCHAR(80);

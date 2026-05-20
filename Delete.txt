@@ -1,0 +1,17 @@
+-- Excluindo 2 registros da tabela reserva_servico
+
+DELETE FROM reserva_servico
+WHERE id_reserva = 1
+AND id_servico = 2;
+
+DELETE FROM reserva_servico
+WHERE id_reserva = 3
+AND id_servico = 4;
+
+-- Excluindo 2 registros da tabela assinatura
+
+DELETE FROM assinatura
+WHERE id_assinatura = 4;
+
+DELETE FROM assinatura
+WHERE id_assinatura = 5;

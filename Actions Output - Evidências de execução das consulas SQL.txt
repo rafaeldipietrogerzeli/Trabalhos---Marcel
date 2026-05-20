@@ -1,0 +1,122 @@
+Apply changes to Coworking_ConnectHub
+
+DROP DATABASE `coworking_connecthub`
+
+CREATE DATABASE coworking
+
+USE coworking
+
+CREATE TABLE cliente (     id_cliente INT PRIMARY KEY AUTO_INCREMENT,     nome_completo VARCHAR(100) NOT NULL,     cpf VARCHAR(14) UNIQUE NOT NULL,     email VARCHAR(100) UNIQUE NOT NULL,     telefone VARCHAR(20),     data_cadastro DATE )
+
+CREATE TABLE plano (     id_plano INT PRIMARY KEY AUTO_INCREMENT,     nome_plano VARCHAR(50) NOT NULL,     valor_mensal DECIMAL(10,2) NOT NULL,     limite_horas INT,     categoria VARCHAR(50) )
+
+CREATE TABLE assinatura (     id_assinatura INT PRIMARY KEY AUTO_INCREMENT,     data_inicio DATE NOT NULL,     id_cliente INT,     id_plano INT,      CONSTRAINT fk_ass_cliente         FOREIGN KEY (id_cliente)         REFERENCES cliente(id_cliente),      CONSTRAINT fk_ass_plano         FOREIGN KEY (id_plano)         REFERENCES plano(id_plano) )
+
+CREATE TABLE sala (     id_sala INT PRIMARY KEY AUTO_INCREMENT,     nome_sala VARCHAR(50),     capacidade_maxima INT,     localizacao VARCHAR(100),     tipo_sala VARCHAR(50) )
+
+CREATE TABLE reserva (     id_reserva INT PRIMARY KEY AUTO_INCREMENT,     data_reserva DATE,     horario_inicio TIME,     horario_fim TIME,     status_reserva VARCHAR(30),     valor_total DECIMAL(10,2),     id_cliente INT,     id_sala INT,      CONSTRAINT fk_res_cliente         FOREIGN KEY (id_cliente)         REFERENCES cliente(id_cliente),      CONSTRAINT fk_res_sala         FOREIGN KEY (id_sala)         REFERENCES sala(id_sala) )
+
+CREATE TABLE servico_adicional (     id_servico INT PRIMARY KEY AUTO_INCREMENT,     nome_servico VARCHAR(50),     descricao VARCHAR(200),     valor_unitario DECIMAL(10,2),     disponibilidade BOOLEAN )
+
+CREATE TABLE reserva_servico (     id_reserva INT,     id_servico INT,     quantidade INT,     valor_cobrado DECIMAL(10,2),      PRIMARY KEY (id_reserva, id_servico),      CONSTRAINT fk_rs_reserva         FOREIGN KEY (id_reserva)         REFERENCES reserva(id_reserva),      CONSTRAINT fk_rs_servico         FOREIGN KEY (id_servico)         REFERENCES servico_adicional(id_servico) )
+
+DROP TABLE reserva_servico
+
+CREATE TABLE reserva_servico (     id_reserva INT,     id_servico INT,     quantidade INT,     valor_cobrado DECIMAL(10,2),      PRIMARY KEY (id_reserva, id_servico),      FOREIGN KEY (id_reserva)         REFERENCES reserva(id_reserva),      FOREIGN KEY (id_servico)         REFERENCES servico_adicional(id_servico) )
+
+ALTER TABLE cliente ADD COLUMN endereco VARCHAR(150)
+
+ALTER TABLE sala MODIFY tipo_sala VARCHAR(80)
+
+
+11:53:38	Apply changes to Coworking_ConnectHub	Changes applied	
+
+11:54:22	DROP DATABASE `coworking_connecthub`	0 row(s) affected	0.046 sec
+
+11:54:32	CREATE DATABASE coworking	1 row(s) affected	0.015 sec
+
+11:54:32	USE coworking	0 row(s) affected	0.000 sec
+
+11:54:33	CREATE TABLE cliente (     id_cliente INT PRIMARY KEY AUTO_INCREMENT,     nome_completo VARCHAR(100) NOT NULL,     cpf VARCHAR(14) UNIQUE NOT NULL,     email VARCHAR(100) UNIQUE NOT NULL,     telefone VARCHAR(20),     data_cadastro DATE )	0 row(s) affected	0.188 sec
+
+11:54:33	CREATE TABLE plano (     id_plano INT PRIMARY KEY AUTO_INCREMENT,     nome_plano VARCHAR(50) NOT NULL,     valor_mensal DECIMAL(10,2) NOT NULL,     limite_horas INT,     categoria VARCHAR(50) )	0 row(s) affected	0.031 sec
+
+11:54:33	CREATE TABLE assinatura (     id_assinatura INT PRIMARY KEY AUTO_INCREMENT,     data_inicio DATE NOT NULL,     id_cliente INT,     id_plano INT,      CONSTRAINT fk_ass_cliente         FOREIGN KEY (id_cliente)         REFERENCES cliente(id_cliente),      CONSTRAINT fk_ass_plano         FOREIGN KEY (id_plano)         REFERENCES plano(id_plano) )	0 row(s) affected	0.156 sec
+
+11:54:33	CREATE TABLE sala (     id_sala INT PRIMARY KEY AUTO_INCREMENT,     nome_sala VARCHAR(50),     capacidade_maxima INT,     localizacao VARCHAR(100),     tipo_sala VARCHAR(50) )	0 row(s) affected	0.000 sec
+
+11:54:33	CREATE TABLE reserva (     id_reserva INT PRIMARY KEY AUTO_INCREMENT,     data_reserva DATE,     horario_inicio TIME,     horario_fim TIME,     status_reserva VARCHAR(30),     valor_total DECIMAL(10,2),     id_cliente INT,     id_sala INT,      CONSTRAINT fk_res_cliente         FOREIGN KEY (id_cliente)         REFERENCES cliente(id_cliente),      CONSTRAINT fk_res_sala         FOREIGN KEY (id_sala)         REFERENCES sala(id_sala) )	0 row(s) affected	0.141 sec
+
+11:54:33	CREATE TABLE servico_adicional (     id_servico INT PRIMARY KEY AUTO_INCREMENT,     nome_servico VARCHAR(50),     descricao VARCHAR(200),     valor_unitario DECIMAL(10,2),     disponibilidade BOOLEAN )	0 row(s) affected	0.000 sec
+
+11:54:33	CREATE TABLE reserva_servico (     id_reserva INT,     id_servico INT,     quantidade INT,     valor_cobrado DECIMAL(10,2),      PRIMARY KEY (id_reserva, id_servico),      CONSTRAINT fk_rs_reserva         FOREIGN KEY (id_reserva)         REFERENCES reserva(id_reserva),      CONSTRAINT fk_rs_servico         FOREIGN KEY (id_servico)         REFERENCES servico_adicional(id_servico) )	0 row(s) affected	0.125 sec
+
+11:54:33	DROP TABLE reserva_servico	0 row(s) affected	0.125 sec
+
+11:54:33	CREATE TABLE reserva_servico (     id_reserva INT,     id_servico INT,     quantidade INT,     valor_cobrado DECIMAL(10,2),      PRIMARY KEY (id_reserva, id_servico),      FOREIGN KEY (id_reserva)         REFERENCES reserva(id_reserva),      FOREIGN KEY (id_servico)         REFERENCES servico_adicional(id_servico) )	0 row(s) affected	0.328 sec
+
+11:54:34	ALTER TABLE cliente ADD COLUMN endereco VARCHAR(150)	0 row(s) affected Records: 0  Duplicates: 0  Warnings: 0	0.031 sec
+
+11:54:34	ALTER TABLE sala MODIFY tipo_sala VARCHAR(80)	0 row(s) affected Records: 0  Duplicates: 0  Warnings: 0	0.062 sec
+
+
+Changes applied
+
+0 row(s) affected
+
+1 row(s) affected
+
+0 row(s) affected
+
+0 row(s) affected
+
+0 row(s) affected
+
+0 row(s) affected
+
+0 row(s) affected
+
+0 row(s) affected
+
+0 row(s) affected
+
+0 row(s) affected
+
+0 row(s) affected
+
+0 row(s) affected
+
+0 row(s) affected Records: 0  Duplicates: 0  Warnings: 0
+
+0 row(s) affected Records: 0  Duplicates: 0  Warnings: 0
+
+
+
+
+0.046 sec
+
+0.015 sec
+
+0.000 sec
+
+0.188 sec
+
+0.031 sec
+
+0.156 sec
+
+0.000 sec
+
+0.141 sec
+
+0.000 sec
+
+0.125 sec
+
+0.125 sec
+
+0.328 sec
+
+0.031 sec
+
+0.062 sec

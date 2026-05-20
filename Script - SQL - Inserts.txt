@@ -1,0 +1,79 @@
+
+-- CLIENTE
+
+INSERT INTO cliente
+(nome_completo, cpf, email, telefone, data_cadastro, endereco)
+VALUES
+('Ana Souza', '111.111.111-11', 'ana@gmail.com', '14999990001', '2026-01-10', 'Rua A'),
+('Bruno Lima', '222.222.222-22', 'bruno@gmail.com', '14999990002', '2026-01-11', 'Rua B'),
+('Carlos Silva', '333.333.333-33', 'carlos@gmail.com', '14999990003', '2026-01-12', 'Rua C'),
+('Daniela Rocha', '444.444.444-44', 'daniela@gmail.com', '14999990004', '2026-01-13', 'Rua D'),
+('Eduardo Alves', '555.555.555-55', 'eduardo@gmail.com', '14999990005', '2026-01-14', 'Rua E');
+
+-- PLANO
+
+INSERT INTO plano
+(nome_plano, valor_mensal, limite_horas, categoria)
+VALUES
+('Start', 150.00, 20, 'Básico'),
+('Flex', 250.00, 40, 'Intermediário'),
+('Pro', 450.00, 80, 'Premium'),
+('Empresarial', 800.00, 160, 'Corporativo'),
+('Virtual', 90.00, 10, 'Online');
+
+-- ASSINATURA
+
+INSERT INTO assinatura
+(data_inicio, id_cliente, id_plano)
+VALUES
+('2026-01-15', 1, 1),
+('2026-01-16', 2, 2),
+('2026-01-17', 3, 3),
+('2026-01-18', 4, 2),
+('2026-01-19', 5, 1);
+
+-- SALA
+
+INSERT INTO sala
+(nome_sala, capacidade_maxima, localizacao, tipo_sala)
+VALUES
+('Sala Orion', 6, '1º Andar', 'Reunião'),
+('Sala Solar', 12, '2º Andar', 'Treinamento'),
+('Sala Lunar', 4, '1º Andar', 'Privativa'),
+('Sala Marte', 10, '3º Andar', 'Reunião'),
+('Sala Netuno', 20, 'Térreo', 'Auditório');
+
+-- RESERVA
+
+INSERT INTO reserva
+(data_reserva, horario_inicio, horario_fim,
+status_reserva, valor_total, id_cliente, id_sala)
+VALUES
+('2026-02-01', '08:00:00', '10:00:00', 'Confirmada', 120.00, 1, 1),
+('2026-02-02', '09:00:00', '11:00:00', 'Confirmada', 200.00, 2, 2),
+('2026-02-03', '14:00:00', '16:00:00', 'Pendente', 150.00, 3, 3),
+('2026-02-04', '13:00:00', '15:00:00', 'Cancelada', 0.00, 4, 4),
+('2026-02-05', '18:00:00', '20:00:00', 'Confirmada', 300.00, 5, 5);
+
+-- SERVICO_ADICIONAL
+
+INSERT INTO servico_adicional
+(nome_servico, descricao, valor_unitario, disponibilidade)
+VALUES
+('Café', 'Serviço de café ilimitado', 15.00, TRUE),
+('Impressão', 'Impressões preto e branco', 1.50, TRUE),
+('Projetor', 'Uso de projetor multimídia', 50.00, TRUE),
+('Estacionamento', 'Vaga de estacionamento', 25.00, TRUE),
+('Internet Premium', 'Internet de alta velocidade', 30.00, TRUE);
+
+-- RESERVA_SERVICO
+
+INSERT INTO reserva_servico
+(id_reserva, id_servico, quantidade, valor_cobrado)
+VALUES
+(1, 1, 2, 30.00),
+(1, 2, 10, 15.00),
+(2, 3, 1, 50.00),
+(3, 4, 1, 25.00),
+(5, 5, 1, 30.00);
+
